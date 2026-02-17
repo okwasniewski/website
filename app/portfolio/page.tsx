@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 export default async function PortfolioPage() {
   const posts = await getPosts({ directory: "portfolio", limit: -1 });
 
-  return <Work posts={posts} />;
+  return <Work posts={posts} showPrimaryActionLink />;
 }
