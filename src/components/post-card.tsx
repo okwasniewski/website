@@ -9,24 +9,39 @@ interface PostCardProps {
   showPrimaryActionLink?: boolean;
 }
 
+function getValidGitHubUrl(value?: string): string | undefined {
+  if (!value) return undefined;
+
+  try {
+    const url = new URL(value);
+    if (!["http:", "https:"].includes(url.protocol)) return undefined;
+
+    const host = url.hostname.toLowerCase();
+    if (host === "github.com" || host.endsWith(".github.com")) {
+      return value;
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+}
+
 export function PostCard({
   meta,
   href,
   compact = false,
   showPrimaryActionLink = false,
 }: PostCardProps) {
-  const githubHref =
-    showPrimaryActionLink &&
-    meta.primaryAction &&
-    /github\.com/i.test(meta.primaryAction.href)
-      ? meta.primaryAction.href
-      : undefined;
+  const githubHref = showPrimaryActionLink
+    ? getValidGitHubUrl(meta.github)
+    : undefined;
 
   return (
     <article
-      className={`${compact ? "py-3" : "py-4"} border-b border-gray-200 dark:border-gray-800 last:border-b-0`}
+      className={`${compact ? "py-3" : "py-4"}`}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-center justify-between gap-4">
         <Link href={href} className="block flex-1 min-w-0 group">
           <h3 className="text-gray-900 dark:text-gray-100 font-medium group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
             {meta.title}
