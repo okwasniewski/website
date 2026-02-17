@@ -11,7 +11,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <Work posts={projects} showAllLink />
+      <Work posts={projects} showAllLink showPrimaryActionLink />
       <Writing posts={posts} />
       <Speaking />
     </>

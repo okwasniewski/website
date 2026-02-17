@@ -6,6 +6,7 @@ export interface PostMeta {
   subtitle?: string;
   featuredImage?: string;
   date?: string;
+  github?: string;
   primaryAction?: {
     text: string;
     href: string;

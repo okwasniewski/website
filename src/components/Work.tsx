@@ -5,16 +5,27 @@ import { PostCard } from "./post-card";
 interface WorkProps {
   posts: Post[];
   showAllLink?: boolean;
+  showPrimaryActionLink?: boolean;
 }
 
-const Work = ({ posts, showAllLink = false }: WorkProps) => (
+const Work = ({
+  posts,
+  showAllLink = false,
+  showPrimaryActionLink = false,
+}: WorkProps) => (
   <section className="mb-16">
     <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
       Projects
     </h2>
     <div>
       {posts.map(({ slug, meta }) => (
-        <PostCard key={slug} meta={meta} href={`/portfolio/${slug}`} compact />
+        <PostCard
+          key={slug}
+          meta={meta}
+          href={`/portfolio/${slug}`}
+          compact
+          showPrimaryActionLink={showPrimaryActionLink}
+        />
       ))}
     </div>
     {showAllLink && (
