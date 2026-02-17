@@ -34,7 +34,19 @@ const Footer = () => (
           <FaXTwitter className="w-5 h-5" />
         </Link>
       </div>
-      <span>© {new Date().getFullYear()}</span>
+      <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-500 text-right">
+        <p>
+          <Link
+            href="https://github.com/okwasniewski/website"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          >
+            Built with ❤️ and <span className="font-semibold">NextJS</span>
+          </Link>
+        </p>
+        <span>© {new Date().getFullYear()}</span>
+      </div>
     </div>
   </footer>
 );
