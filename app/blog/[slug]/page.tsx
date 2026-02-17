@@ -48,7 +48,7 @@ export default async function BlogPostPage({ params }: Props) {
         date={meta.date}
         primaryAction={meta.primaryAction}
       />
-      <div className="mx-auto prose dark:prose-invert prose-sm sm:prose-base font-sans">
+      <div className="mx-auto pixel-prose prose-sm sm:prose-base pixel-reveal">
         <Content />
       </div>
     </>

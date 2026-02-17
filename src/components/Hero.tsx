@@ -2,32 +2,32 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Hero = () => (
-  <section className="mb-16">
+  <section className="mb-16 pixel-reveal">
     <div className="flex items-center gap-4 mb-6">
       <Image
         src="/oskar.jpg"
         width={60}
         height={60}
         alt="Oskar Kwaśniewski"
-        className="rounded-full"
+        className="pixel-avatar"
       />
       <div>
-        <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+        <h1 className="pixel-title-lg">
           Oskar Kwaśniewski
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 font-mono">
+        <p className="pixel-subtitle">
           Senior Software Engineer
         </p>
       </div>
     </div>
-    <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-4">
+    <div className="pixel-body space-y-4">
       <p>
         Building React Native apps at{" "}
         <a
           href="https://www.born.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100"
+          className="pixel-link hover:underline underline-offset-2"
         >
           Born
         </a>
@@ -36,7 +36,7 @@ const Hero = () => (
           href="https://callstack.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100"
+          className="pixel-link hover:underline underline-offset-2"
         >
           Callstack
         </a>{" "}
@@ -44,15 +44,24 @@ const Hero = () => (
       </p>
       <p>
         Creator of{" "}
-        <Link href="/portfolio/react-native-visionos" className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100">
+        <Link
+          href="/portfolio/react-native-visionos"
+          className="pixel-link underline underline-offset-2"
+        >
           react-native-visionos
         </Link>
         ,{" "}
-        <Link href="/portfolio/react-native-bottom-tabs" className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100">
+        <Link
+          href="/portfolio/react-native-bottom-tabs"
+          className="pixel-link underline underline-offset-2"
+        >
           react-native-bottom-tabs
         </Link>
         , and{" "}
-        <Link href="/portfolio/liquid-glass" className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100">
+        <Link
+          href="/portfolio/liquid-glass"
+          className="pixel-link underline underline-offset-2"
+        >
           Liquid Glass
         </Link>
         . Focused on bridging React Native with native platforms — iOS, Android, visionOS, macOS.

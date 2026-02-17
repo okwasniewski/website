@@ -7,8 +7,8 @@ interface WritingProps {
 }
 
 const Writing = ({ posts }: WritingProps) => (
-  <section className="mb-16">
-    <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
+  <section className="mb-16 pixel-reveal">
+    <h2 className="pixel-section-title">
       Writing
     </h2>
     <div>
@@ -18,7 +18,7 @@ const Writing = ({ posts }: WritingProps) => (
     </div>
     <Link
       href="/blog"
-      className="inline-block mt-4 text-gray-500 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm"
+      className="inline-block mt-4 pixel-link text-sm transition-colors"
     >
       All posts →
     </Link>

@@ -7,10 +7,10 @@ interface BlogProps {
 
 const Blog = ({ posts }: BlogProps) => (
   <>
-    <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+    <h1 className="pixel-title-lg mb-2">
       Blog
     </h1>
-    <p className="text-gray-600 dark:text-gray-400 mb-8">
+    <p className="pixel-body mb-8">
       Anything related to my hobbies, programming, and technology.
     </p>
     <div>

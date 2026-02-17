@@ -41,8 +41,9 @@ export default function RootLayout({
   return (
     <html lang="en-US" className={`${geist.variable} ${geist.className}`}>
       <body>
+        <div className="pixel-scanlines" aria-hidden="true" />
         <Header />
-        <main className="w-full max-w-[750px] px-6 mx-auto min-h-[88vh] py-8 mt-10">
+        <main className="w-full max-w-[860px] px-6 py-8 mx-auto min-h-[88vh] mt-10 pixel-shell pixel-main pixel-reveal">
           {children}
         </main>
         <Footer />
