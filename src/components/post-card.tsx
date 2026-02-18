@@ -39,14 +39,14 @@ export function PostCard({
 
   return (
     <article
-      className={`${compact ? "py-3" : "py-4"}`}
+      className={`pixel-entry ${compact ? "py-3" : "py-4"}`}
     >
       <div className="flex items-center justify-between gap-4">
         <Link href={href} className="block flex-1 min-w-0 group">
-          <h3 className="text-gray-900 dark:text-gray-100 font-medium group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+          <h3 className="pixel-title transition-colors">
             {meta.title}
           </h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <p className="pixel-subtitle mt-1">
             {meta.subtitle}
           </p>
         </Link>
@@ -58,13 +58,13 @@ export function PostCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${meta.title ?? "project"} on GitHub`}
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                className="pixel-icon-link transition-colors"
               >
                 <FaGithub className="w-4 h-4" />
               </Link>
             )}
             {meta.date && (
-              <span className="text-sm text-gray-400 dark:text-gray-500 shrink-0">
+              <span className="pixel-meta shrink-0">
                 {meta.date}
               </span>
             )}

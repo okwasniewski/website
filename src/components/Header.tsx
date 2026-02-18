@@ -1,36 +1,36 @@
 import Link from "next/link";
 
 const Header = () => (
-  <header className="w-full max-w-[750px] mx-auto px-6 py-8">
-    <nav className="flex items-center justify-between">
+  <header className="w-full max-w-[860px] mx-auto px-6 pt-8">
+    <nav className="pixel-shell px-4 py-3 flex items-center justify-between">
       <Link
         href="/"
-        className="text-gray-900 dark:text-gray-100 hover:opacity-70 transition-opacity font-bold"
+        className="pixel-brand pixel-link transition-opacity hover:opacity-80"
       >
         okwasniewski
       </Link>
-      <div className="flex gap-6 text-gray-600 dark:text-gray-400 text-sm">
+      <div className="flex gap-3 sm:gap-6">
         <Link
           href="/blog"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="pixel-nav-link transition-colors"
         >
           blog
         </Link>
         <Link
           href="/portfolio"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="pixel-nav-link transition-colors"
         >
           portfolio
         </Link>
         <Link
           href="/videos"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="pixel-nav-link transition-colors"
         >
           videos
         </Link>
         <Link
           href="/contact"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="pixel-nav-link transition-colors"
         >
           contact
         </Link>

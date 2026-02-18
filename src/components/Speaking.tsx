@@ -1,15 +1,15 @@
 import Link from "next/link";
 
 const Speaking = () => (
-  <section className="mb-16">
-    <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
+  <section className="mb-16 pixel-reveal">
+    <h2 className="pixel-section-title">
       Speaking
     </h2>
-    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+    <p className="pixel-body leading-relaxed">
       I speak at React Native conferences about native development, visionOS, and performance optimization.{" "}
       <Link
         href="/videos"
-        className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+        className="pixel-link underline underline-offset-2 transition-colors"
       >
         Watch my talks →
       </Link>
