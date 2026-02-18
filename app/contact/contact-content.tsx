@@ -69,7 +69,7 @@ export default function ContactContent() {
             href="mailto:hello@oskarkwasniewski.dev"
             className="text-gray-700 dark:text-gray-300 underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
           >
-            hello@oskarkwasniewski.dev
+            hello@okwasniewski.com
           </Link>
         </div>
       </div>
