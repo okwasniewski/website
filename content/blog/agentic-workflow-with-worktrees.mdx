@@ -14,30 +14,30 @@ export const meta = {
 
 ## Introduction
 
-For past few months my workflow has been heavily relying on working with coding agents. The big shift happened in December where I really took Opus 4.5 through its paces and spend a lot of time with it. This was the time when it clicked for me - it fundamentally changed how I work with code.
+For the past few months my workflow has heavily relied on coding agents. The big shift happened in December, when I really took Opus 4.5 through its paces and spent a lot of time with it. That was the moment it clicked for me - it fundamentally changed how I work with code.
 
-I'm still not sold on vibecoding though, I'm reviewing all the code my agent is writing and I think you should too. I often find that either they are taking A LOT of shortcuts or overengineering things (especially codex 🫠). You really have to spend a lot of time to talk through the plan with the agent - and for that deep technical knowledge is required.
+I'm still not sold on vibe coding though. I review all code my agent writes, and I think you should too. I often find they either take a lot of shortcuts or overengineer things (especially Codex 🫠). You really have to spend time talking through the plan with an agent - and for that deep technical knowledge is required.
 
-In this quick blog post I want to outline how I use worktrees to orchestrate multiple agents in the same repository. 
+In this quick blog post I want to outline how I use worktrees to orchestrate multiple agents in the same repository.
 
 ## Why worktrees
 
-I know there is a big split in the community on this. People are either doing full separate git checkouts (as the author of OpenClaw, [Peter Steinberger](https://x.com/steipete)) or relying on the built-in feature of git to achieve it - worktrees.
+I know there is a big split in the community on this. People either do fully separate Git checkouts (like OpenClaw author [Peter Steinberger](https://x.com/steipete)) or rely on the built-in Git feature - worktrees.
 
-I agree with the first party that using the plain git commands for worktrees might be a bit rough, but I solved it with help of a tool called [worktrunk](https://worktrunk.dev) which I think is how the API of git worktrees should be from the start. 
+I agree with the first camp that plain Git commands for worktrees can feel rough, but I solved that with a tool called [worktrunk](https://worktrunk.dev), which is how the Git worktree API should have felt from the start.
 
 
 ## My setup
 
-Core of my workflow starts with `tmux`, it helps me manage terminal sessions, windows and splits. Most of the time in each of my tmux panes sits [OpenCode](https://opencode.ai). I also sometimes use [Claude Code](https://claude.com/product/claude-code) or [Codex](https://openai.com/codex/) but my favourite is OpenCode - it has the best UI and UX, I also love to try out different models and OpenCode is the best for that.
+The core of my workflow starts with `tmux`. It helps me manage terminal sessions, windows, and panes. Most of the time each pane runs [OpenCode](https://opencode.ai). I also sometimes use [Claude Code](https://claude.com/product/claude-code) or [Codex](https://openai.com/codex/), but OpenCode is my favorite - best UI and UX, plus great support for trying different models.
 
-As I mentioned in the previous section, the core of my workflow relies on [worktrunk](https://worktrunk.dev). You can install it on macOS using homebrew: 
+As I mentioned in the previous section, the core of my workflow relies on [worktrunk](https://worktrunk.dev). You can install it on macOS using Homebrew:
 
 ```bash
 brew install worktrunk && wt config shell install
 ```
 
-The way I work with AI requires a lot of back and fourth on the plan before the agent starts execution. To be a bit faster I often rely on dictation instead of typing, for that I use [Handy 🖐️](https://handy.computer) which runs a local model for dictation. Lately I've been working a lot with GPT-5.3 Codex which does a lot of research to compose plans - and this is a perfect place were we can parallel multiple workers to work on features faster.
+The way I work with AI requires a lot of back and forth on the plan before the agent starts execution. To move faster I often rely on dictation instead of typing. For that I use [Handy 🖐️](https://handy.computer), which runs a local model for dictation. Lately I've been using GPT-5.3 Codex a lot, which does a lot of research to compose plans - and this is a perfect place where we can run multiple workers in parallel.
 
 When working on a new feature I create a new worktree by running:
 
@@ -45,26 +45,26 @@ When working on a new feature I create a new worktree by running:
 wt switch <branch_name> --create
 ```
 
-It then automatically copies my `.env` and `node_modules` thanks to this line in my `.config/woktrunk/config.yml`:
+It then automatically copies my `.env` and `node_modules` thanks to this line in my `.config/worktrunk/config.yml`:
 
 ```yml
 [post-create]
 copy = "wt step copy-ignored"
 ```
 
-Then I pop into OpenCode and switch to Plan mode. I have custom skills for how I like my plans to be structured (you can check them out here). Once I give the agent all my context and let him work on the plan, I'll spin up a second one by running the same command as above and go back and fourth between them. I found that working with around 3 of them at the same time is the sweet spot for me. I know a people are bragging on X how they manage 10 or 15 agents at the same time but I found it was too much context switching for me.
+Then I pop into OpenCode and switch to Plan mode. I have custom skills for how I like my plans to be structured (you can check them out in my [dotfiles repo](https://github.com/okwasniewski/dotfiles)). Once I give an agent all my context and let it work on the plan, I spin up a second one by running the same command and go back and forth between them. I found that working with around 3 agents at the same time is the sweet spot for me. I know people on X brag about managing 10 or 15 agents at once, but for me that was too much context switching.
 
-After a feature is finished I have a custom OpenCode command `/ship` that is pretty self explanatory - it uses my commit and PR skills to open a pull request for GitHub.
+After a feature is finished I run a custom OpenCode command, `/ship`. It is pretty self-explanatory - it uses my commit and PR skills to open a pull request on GitHub, and it is also documented in my [dotfiles repo](https://github.com/okwasniewski/dotfiles). Before shipping, I still run tests and quickly verify the feature.
 
-One last command to run is to remove the worktree from your computer:
+One last command is to remove the worktree from your machine:
 
 ```bash
 wt remove <branch_name>
 ```
 
-Pretty easy right? 😅
+Pretty easy, right? 😅
 
 
 ## That's a wrap
 
-Thanks for reading! I hope you found this article useful. If you have any questions or feedback feel free to reach out to me on [Twitter](https://twitter.com/o_kwasniewski).
+Thanks for reading! I hope you found this article useful. If you have any questions or feedback, feel free to reach out to me on [Twitter](https://twitter.com/o_kwasniewski).
