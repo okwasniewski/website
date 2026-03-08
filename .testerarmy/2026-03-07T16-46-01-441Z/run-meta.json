@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runId": "2026-03-07T16-46-01-441Z",
+  "pid": 32038,
+  "startedAt": "2026-03-07T16:46:01.447Z",
+  "prompt": "On http://localhost:3002, use mobile viewport 375x812.\nVerify header links are all present and the Home/Blog/Portfolio/Videos/Contact targets are / /blog /portfolio /videos /contact respectively.\nTest each header link by clicking it.\nIf link is missing, wrong route, unclickable, or navigation fails, report issue.\nIgnore analytics/config console warnings.",
+  "targetUrl": "",
+  "runtimeMode": "headless",
+  "finishedAt": "2026-03-07T16:47:29.472Z"
+}

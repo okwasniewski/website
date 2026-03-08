@@ -1,0 +1,40 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Tested header navigation in mobile viewport (375x812). All links (Home, Blog, Portfolio, Videos, Contact) were present, but the 'Blog' and 'Contact' links inconsistently route to incorrect paths ('/blgo' and '/contcat') resulting in 404 errors.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header navigation and routing', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  const header = page.locator('header');\n  await expect(header).toBeVisible();\n\n  // Verify Brand/Home link\n  const homeLink = header.getByRole('link', { name: 'okwasniewski' });\n  await expect(homeLink).toBeVisible();\n  await homeLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n\n  // Verify Portfolio link\n  const portfolioLink = header.getByRole('link', { name: 'portfolio' });\n  await expect(portfolioLink).toBeVisible();\n  await portfolioLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/portfolio');\n\n  // Verify Videos link\n  const videosLink = header.getByRole('link', { name: 'videos' });\n  await expect(videosLink).toBeVisible();\n  await videosLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/videos');\n\n  // Verify Blog link (Found to route to /blgo intermittently)\n  const blogLink = header.getByRole('link', { name: 'blog' });\n  await expect(blogLink).toBeVisible();\n  await blogLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/blog');\n\n  // Verify Contact link (Found to route to /contcat intermittently)\n  const contactLink = header.getByRole('link', { name: 'contact' });\n  await expect(contactLink).toBeVisible();\n  await contactLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/contact');\n});",
+  "issues": [
+    {
+      "name": "Contact link has wrong route and results in 404",
+      "description": "Expected: The \"Contact\" link in the header should route to \"/contact\". Actual: The \"Contact\" link in the header routes to \"/contcat\", which results in a 404 error page.",
+      "url": "http://localhost:3002/contcat",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Locate the \"Contact\" link in the header navigation.",
+        "Click the \"Contact\" link."
+      ],
+      "expectedBehavior": "The \"Contact\" link in the header should route to \"/contact\".",
+      "actualBehavior": "The \"Contact\" link in the header routes to \"/contcat\", which results in a 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-54-45-870Z/screenshot-001.png"
+    },
+    {
+      "name": "Blog link has wrong route and results in 404",
+      "description": "Expected: The \"Blog\" link in the header should route to \"/blog\". Actual: The \"Blog\" link in the header routes to \"/blgo\", which results in a 404 error page.",
+      "url": "http://localhost:3002/blgo?_rsc=vusbg:0",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Locate the \"Blog\" link in the header navigation.",
+        "Click the \"Blog\" link."
+      ],
+      "expectedBehavior": "The \"Blog\" link in the header should route to \"/blog\".",
+      "actualBehavior": "The \"Blog\" link in the header routes to \"/blgo\", which results in a 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-54-45-870Z/screenshot-002.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-54-45-870Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-54-45-870Z/screenshot-002.png"
+  ]
+}

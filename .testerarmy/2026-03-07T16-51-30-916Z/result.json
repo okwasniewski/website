@@ -1,0 +1,10 @@
+{
+  "featureName": "unknown",
+  "result": "PASS",
+  "description": "Verified that all header navigation links (okwasniewski, blog, portfolio, videos, contact) are present in the mobile viewport and correctly route to their respective paths (/, /blog, /portfolio, /videos, /contact). Navigation was validated by clicking each link and confirming the resulting URL.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header navigation links', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  const links = [\n    { name: 'okwasniewski', path: '/' },\n    { name: 'blog', path: '/blog' },\n    { name: 'portfolio', path: '/portfolio' },\n    { name: 'videos', path: '/videos' },\n    { name: 'contact', path: '/contact' }\n  ];\n\n  for (const linkInfo of links) {\n    const link = page.getByRole('link', { name: linkInfo.name, exact: true });\n    await expect(link).toBeVisible();\n    await link.click();\n    await expect(page).toHaveURL(new RegExp(`${linkInfo.path}$`));\n  }\n});",
+  "issues": [],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-51-30-916Z/screenshot-001.png"
+  ]
+}

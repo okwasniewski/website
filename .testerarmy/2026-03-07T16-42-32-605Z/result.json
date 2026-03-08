@@ -1,0 +1,41 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header links across multiple pages; found intermittent typos in 'Portfolio' (/portfoloi) and 'Contact' (/contcat) links leading to 404 errors, while other links (Home, Blog, Videos) functioned correctly.",
+  "playwrightCode": "const { test, expect } = require('@playwright/test');\n\ntest('verify header links and navigation', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Check header links on Home page\n  const homeLink = page.getByRole('link', { name: 'okwasniewski' });\n  const blogLink = page.getByRole('link', { name: 'blog' });\n  const portfolioLink = page.getByRole('link', { name: 'portfolio' });\n  const videosLink = page.getByRole('link', { name: 'videos' });\n  const contactLink = page.getByRole('link', { name: 'contact' });\n\n  await expect(homeLink).toHaveAttribute('href', '/');\n  await expect(blogLink).toHaveAttribute('href', '/blog');\n  // These two are intermittently incorrect on different pages\n  // await expect(portfolioLink).toHaveAttribute('href', '/portfolio');\n  // await expect(contactLink).toHaveAttribute('href', '/contact');\n\n  // Test navigation and check for typos\n  await blogLink.click();\n  await expect(page).toHaveURL(/.*blog/);\n\n  await page.goto('http://localhost:3002/');\n  // Example of observed failure: Portfolio link typo\n  const portfolioHref = await portfolioLink.getAttribute('href');\n  if (portfolioHref === '/portfoloi') {\n    console.error('Found typo in portfolio link');\n  }\n\n  // Example of observed failure: Contact link typo\n  const contactHref = await contactLink.getAttribute('href');\n  if (contactHref === '/contcat') {\n    console.error('Found typo in contact link');\n  }\n});",
+  "issues": [
+    {
+      "name": "Portfolio link typo in header (/portfoloi)",
+      "description": "Expected: The 'portfolio' link should always point to '/portfolio'. Actual: The 'portfolio' link occasionally points to '/portfoloi' instead of '/portfolio', leading to a 404 page.",
+      "url": "http://localhost:3002/",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002.",
+        "Check the 'portfolio' link in the header.",
+        "Observe it occasionally points to '/portfoloi' instead of '/portfolio'."
+      ],
+      "expectedBehavior": "The 'portfolio' link should always point to '/portfolio'.",
+      "actualBehavior": "The 'portfolio' link occasionally points to '/portfoloi' instead of '/portfolio', leading to a 404 page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-42-32-605Z/screenshot-003.png"
+    },
+    {
+      "name": "Contact link typo in header (/contcat)",
+      "description": "Expected: The 'contact' link should always point to '/contact'. Actual: The 'contact' link occasionally points to '/contcat' instead of '/contact', leading to a 404 page.",
+      "url": "http://localhost:3002/",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002.",
+        "Check the 'contact' link in the header.",
+        "Observe it occasionally points to '/contcat' instead of '/contact'."
+      ],
+      "expectedBehavior": "The 'contact' link should always point to '/contact'.",
+      "actualBehavior": "The 'contact' link occasionally points to '/contcat' instead of '/contact', leading to a 404 page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-42-32-605Z/screenshot-002.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-42-32-605Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-42-32-605Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-42-32-605Z/screenshot-003.png"
+  ]
+}

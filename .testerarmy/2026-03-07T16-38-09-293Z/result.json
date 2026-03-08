@@ -1,0 +1,10 @@
+{
+  "featureName": "unknown",
+  "result": "PASS",
+  "description": "Verified all header links (okwasniewski, blog, portfolio, videos, contact) are present and correctly navigate to /, /blog, /portfolio, /videos, and /contact respectively in mobile viewport 375x812.",
+  "playwrightCode": "const { test, expect } = require('@playwright/test');\n\ntest('Verify header links and navigation', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002');\n\n  const links = [\n    { text: 'okwasniewski', href: '/' },\n    { text: 'blog', href: '/blog' },\n    { text: 'portfolio', href: '/portfolio' },\n    { text: 'videos', href: '/videos' },\n    { text: 'contact', href: '/contact' }\n  ];\n\n  for (const link of links) {\n    const element = page.locator(`header a[href=\"${link.href}\"]`).first();\n    await expect(element).toBeVisible();\n    if (link.text) {\n      await expect(element).toHaveText(new RegExp(link.text, 'i'));\n    }\n    await element.click();\n    await expect(page).toHaveURL(new RegExp(`${link.href}$`));\n    // Go back to home if not already there to ensure we can click the next link\n    if (link.href !== '/') {\n      await page.goto('http://localhost:3002');\n    }\n  }\n});",
+  "issues": [],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-38-09-293Z/screenshot-001.png"
+  ]
+}

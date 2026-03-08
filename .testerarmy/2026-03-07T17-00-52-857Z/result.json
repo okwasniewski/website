@@ -1,0 +1,25 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Tested header navigation in mobile view (375x812) and found that the Contact link correctly exists but has a typo in its route ('/contcat'), leading to a 404 error.",
+  "playwrightCode": "const { test, expect } = require('@playwright/test');\n\ntest('Header navigation validation', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002');\n\n  // Verify Home (Brand)\n  const brand = page.getByRole('link', { name: 'okwasniewski' });\n  await expect(brand).toBeVisible();\n  await brand.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n\n  // Verify Blog\n  const blog = page.getByRole('link', { name: 'blog' });\n  await expect(blog).toBeVisible();\n  await blog.click();\n  await expect(page).toHaveURL('http://localhost:3002/blog');\n\n  // Verify Portfolio\n  const portfolio = page.getByRole('link', { name: 'portfolio' });\n  await expect(portfolio).toBeVisible();\n  await portfolio.click();\n  await expect(page).toHaveURL('http://localhost:3002/portfolio');\n\n  // Verify Videos\n  const videos = page.getByRole('link', { name: 'videos' });\n  await expect(videos).toBeVisible();\n  await videos.click();\n  await expect(page).toHaveURL('http://localhost:3002/videos');\n\n  // Verify Contact (This is where the bug is)\n  const contact = page.getByRole('link', { name: 'contact' });\n  await expect(contact).toBeVisible();\n  await contact.click();\n  // Expecting /contact but found /contcat which results in 404\n  await expect(page).toHaveURL('http://localhost:3002/contact');\n});",
+  "issues": [
+    {
+      "name": "Contact link has wrong route (/contcat) and results in 404",
+      "description": "Expected: The Contact link in the header should point to \"/contact\" and navigate to the correct page. Actual: The Contact link in the header points to \"/contcat\" and results in a 404 error page.",
+      "url": "http://localhost:3002/contcat",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002 using a mobile viewport.",
+        "Click on the \"Contact\" link in the navigation header.",
+        "Observe the URL and the page content."
+      ],
+      "expectedBehavior": "The Contact link in the header should point to \"/contact\" and navigate to the correct page.",
+      "actualBehavior": "The Contact link in the header points to \"/contcat\" and results in a 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-00-52-857Z/screenshot-001.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-00-52-857Z/screenshot-001.png"
+  ]
+}

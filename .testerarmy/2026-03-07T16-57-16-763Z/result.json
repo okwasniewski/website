@@ -1,0 +1,44 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header navigation in mobile viewport. Found incorrect routes for 'Portfolio' on the home page and 'Contact' on the 404 page, both leading to broken links.",
+  "playwrightCode": "const { test, expect } = require('@playwright/test');\n\ntest('verify header navigation and routes', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Verify Brand link\n  const brandLink = page.getByRole('link', { name: 'okwasniewski' });\n  await expect(brandLink).toHaveAttribute('href', '/');\n  await brandLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n\n  // Verify Blog link\n  const blogLink = page.getByRole('link', { name: 'blog', exact: true });\n  await expect(blogLink).toHaveAttribute('href', '/blog');\n  await blogLink.click();\n  await expect(page).toHaveURL(/.*\\/blog/);\n  await page.goto('http://localhost:3002/');\n\n  // Verify Portfolio link (Known issue: misspelled on home page)\n  const portfolioLink = page.getByRole('link', { name: 'portfolio', exact: true });\n  const portfolioHref = await portfolioLink.getAttribute('href');\n  if (portfolioHref === '/portfoloi') {\n    console.log('Detected bug: Portfolio link is misspelled as /portfoloi');\n  }\n  await portfolioLink.click();\n  // Expecting /portfolio but might hit /portfoloi\n\n  // Verify Videos link\n  await page.goto('http://localhost:3002/');\n  const videosLink = page.getByRole('link', { name: 'videos', exact: true });\n  await expect(videosLink).toHaveAttribute('href', '/videos');\n  await videosLink.click();\n  await expect(page).toHaveURL(/.*\\/videos/);\n\n  // Verify Contact link (Known issue: misspelled on 404 page)\n  await page.goto('http://localhost:3002/broken-link'); // Trigger 404\n  const contactLink = page.getByRole('link', { name: 'contact', exact: true });\n  const contactHref = await contactLink.getAttribute('href');\n  if (contactHref === '/contcat') {\n    console.log('Detected bug: Contact link is misspelled as /contcat on 404 page');\n  }\n});",
+  "issues": [
+    {
+      "name": "Incorrect route for Portfolio link on home page",
+      "description": "Expected: The \"Portfolio\" link should point to \"/portfolio\" on all pages. Actual: The \"Portfolio\" link in the header on the home page points to \"/portfoloi\" instead of \"/portfolio\", leading to a 404 error page.",
+      "url": "http://localhost:3002/",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/ (Home page).",
+        "Check the \"Portfolio\" link in the header.",
+        "Verify that the link points to \"/portfoloi\" instead of \"/portfolio\"."
+      ],
+      "expectedBehavior": "The \"Portfolio\" link should point to \"/portfolio\" on all pages.",
+      "actualBehavior": "The \"Portfolio\" link in the header on the home page points to \"/portfoloi\" instead of \"/portfolio\", leading to a 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-005.png"
+    },
+    {
+      "name": "Incorrect route for Contact link on 404 page",
+      "description": "Expected: The \"Contact\" link should point to \"/contact\" on all pages. Actual: The \"Contact\" link in the header on the 404 error page points to \"/contcat\" instead of \"/contact\", which leads to another 404 error page.",
+      "url": "http://localhost:3002/broken-link",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/broken-link (to trigger 404 page).",
+        "Check the \"Contact\" link in the header.",
+        "Verify that the link points to \"/contcat\" instead of \"/contact\"."
+      ],
+      "expectedBehavior": "The \"Contact\" link should point to \"/contact\" on all pages.",
+      "actualBehavior": "The \"Contact\" link in the header on the 404 error page points to \"/contcat\" instead of \"/contact\", which leads to another 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-006.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-003.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-004.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-005.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/screenshot-006.png"
+  ]
+}

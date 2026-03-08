@@ -1,0 +1,26 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header navigation in mobile viewport; all links (Home, Portfolio, Videos, Contact) correctly route to their respective pages, but the 'Blog' link is missing from the header specifically on the Home page.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header navigation and missing blog link', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Verify brand link exists and routes correctly\n  const brandLink = page.locator('header nav >> text=okwasniewski');\n  await expect(brandLink).toBeVisible();\n  await expect(brandLink).toHaveAttribute('href', '/');\n\n  // Verify Portfolio link\n  const portfolioLink = page.locator('header nav >> text=portfolio');\n  await expect(portfolioLink).toBeVisible();\n  await portfolioLink.click();\n  await expect(page).toHaveURL(/.*portfolio/);\n\n  // Verify Blog link is present on portfolio page (but missing on home)\n  const blogLink = page.locator('header nav >> text=blog');\n  await expect(blogLink).toBeVisible();\n\n  // Verify Videos link\n  const videosLink = page.locator('header nav >> text=videos');\n  await expect(videosLink).toBeVisible();\n  await videosLink.click();\n  await expect(page).toHaveURL(/.*videos/);\n\n  // Verify Contact link\n  const contactLink = page.locator('header nav >> text=contact');\n  await expect(contactLink).toBeVisible();\n  await contactLink.click();\n  await expect(page).toHaveURL(/.*contact/);\n\n  // Return to home and verify Blog link is missing\n  await brandLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n  await expect(page.locator('header nav >> text=blog')).not.toBeVisible();\n});",
+  "issues": [
+    {
+      "name": "Blog link missing from Home page header",
+      "description": "Expected: The 'Blog' link should be present in the header on all pages, including the Home page, as part of the consistent site navigation. Actual: The 'Blog' link is missing from the navigation header on the Home page ('/'). It is present on other pages like '/portfolio', '/videos', and '/contact'.",
+      "url": "http://localhost:3002/",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/ in mobile viewport (375x812).",
+        "Observe the header navigation links.",
+        "Notice that 'Blog' is missing, while 'okwasniewski', 'portfolio', 'videos', and 'contact' are present.",
+        "Navigate to http://localhost:3002/portfolio and observe that 'Blog' is now present in the header."
+      ],
+      "expectedBehavior": "The 'Blog' link should be present in the header on all pages, including the Home page, as part of the consistent site navigation.",
+      "actualBehavior": "The 'Blog' link is missing from the navigation header on the Home page ('/'). It is present on other pages like '/portfolio', '/videos', and '/contact'.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-03-22-271Z/screenshot-001.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-03-22-271Z/screenshot-001.png"
+  ]
+}

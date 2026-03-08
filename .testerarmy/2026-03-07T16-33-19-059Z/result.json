@@ -1,0 +1,27 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header links blog/portfolio/videos/contact on mobile; found a typo in the 'contact' link pointing to '/contcat' leading to a 404 error page.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('Verify header links and navigation', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Verify brand label (home)\n  const brandLabel = page.getByRole('link', { name: 'okwasniewski' });\n  await expect(brandLabel).toBeVisible();\n  await brandLabel.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n\n  // Verify blog link\n  const blogLink = page.getByRole('link', { name: 'blog', exact: true });\n  await expect(blogLink).toBeVisible();\n  await blogLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/blog');\n  await page.goBack();\n\n  // Verify portfolio link\n  const portfolioLink = page.getByRole('link', { name: 'portfolio' });\n  await expect(portfolioLink).toBeVisible();\n  await portfolioLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/portfolio');\n  await page.goBack();\n\n  // Verify videos link\n  const videosLink = page.getByRole('link', { name: 'videos' });\n  await expect(videosLink).toBeVisible();\n  await videosLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/videos');\n  await page.goBack();\n\n  // Verify contact link\n  const contactLink = page.getByRole('link', { name: 'contact' });\n  await expect(contactLink).toBeVisible();\n  await contactLink.click();\n  // This will fail because the actual link points to /contcat\n  await expect(page).toHaveURL('http://localhost:3002/contact');\n});",
+  "issues": [
+    {
+      "name": "Contact link typo in header (/contcat instead of /contact)",
+      "description": "Expected: The contact link in the header should navigate to /contact. Actual: The contact link in the header navigates to /contcat, which results in a 404 error page.",
+      "url": "http://localhost:3002/",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Resize the browser to 375x812 (mobile)",
+        "Click the \"contact\" link in the header",
+        "Observe that the URL is /contcat and a 404 error page is displayed"
+      ],
+      "expectedBehavior": "The contact link in the header should navigate to /contact.",
+      "actualBehavior": "The contact link in the header navigates to /contcat, which results in a 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-33-19-059Z/screenshot-002.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-33-19-059Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-33-19-059Z/screenshot-002.png"
+  ]
+}

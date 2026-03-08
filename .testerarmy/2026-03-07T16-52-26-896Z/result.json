@@ -1,0 +1,51 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header links and routes on mobile viewport. Found that the brand link text is 'Oskar Site' instead of 'okwasniewski', the 'Home' link text is missing, and the navigation links are lowercase instead of capitalized. Routes are correct for all 5 links.",
+  "playwrightCode": "const { test, expect } = require('@playwright/test');\n\ntest('verify header links and routes', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Verify brand link\n  const brandLink = page.locator('header a').first();\n  await expect(brandLink).toHaveText('okwasniewski');\n  await expect(brandLink).toHaveAttribute('href', '/');\n\n  // Verify other links\n  const links = [\n    { text: 'Blog', href: '/blog' },\n    { text: 'Portfolio', href: '/portfolio' },\n    { text: 'Videos', href: '/videos' },\n    { text: 'Contact', href: '/contact' }\n  ];\n\n  for (const link of links) {\n    const locator = page.locator(`header a:has-text(\"${link.text}\")`);\n    await expect(locator).toBeVisible();\n    await locator.click();\n    await expect(page).toHaveURL(new RegExp(link.href));\n  }\n});",
+  "issues": [
+    {
+      "name": "Brand text mismatch in header",
+      "description": "Expected: The brand link should be named \"Home\" or \"okwasniewski\" as per the requirement. Actual: The brand link text is \"Oskar Site\" and it is not named \"Home\" or \"okwasniewski\".",
+      "url": "http://localhost:3002/",
+      "severity": 2,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Check the brand link text in the header"
+      ],
+      "expectedBehavior": "The brand link should be named \"Home\" or \"okwasniewski\" as per the requirement.",
+      "actualBehavior": "The brand link text is \"Oskar Site\" and it is not named \"Home\" or \"okwasniewski\"."
+    },
+    {
+      "name": "Link capitalization mismatch in header",
+      "description": "Expected: The links should be capitalized as per the requirement: \"Blog\", \"Portfolio\", \"Videos\", \"Contact\". Actual: The links in the header are lowercase: \"blog\", \"portfolio\", \"videos\", \"contact\".",
+      "url": "http://localhost:3002/",
+      "severity": 1,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Check the navigation links in the header"
+      ],
+      "expectedBehavior": "The links should be capitalized as per the requirement: \"Blog\", \"Portfolio\", \"Videos\", \"Contact\".",
+      "actualBehavior": "The links in the header are lowercase: \"blog\", \"portfolio\", \"videos\", \"contact\".",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-52-26-896Z/screenshot-002.png"
+    },
+    {
+      "name": "Home link missing in header",
+      "description": "Expected: The header should contain a \"Home\" link. Actual: The header contains 5 links: \"Oskar Site\", \"blog\", \"portfolio\", \"videos\", \"contact\". There is no link named \"Home\".",
+      "url": "http://localhost:3002/contact",
+      "severity": 2,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Check the navigation links in the header for \"Home\" link."
+      ],
+      "expectedBehavior": "The header should contain a \"Home\" link.",
+      "actualBehavior": "The header contains 5 links: \"Oskar Site\", \"blog\", \"portfolio\", \"videos\", \"contact\". There is no link named \"Home\".",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-52-26-896Z/screenshot-003.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-52-26-896Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-52-26-896Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-52-26-896Z/screenshot-003.png"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runId": "2026-03-07T16-30-49-301Z",
+  "pid": 29389,
+  "startedAt": "2026-03-07T16:30:49.306Z",
+  "prompt": "Baseline check on http://localhost:3002 mobile viewport 375x812: verify header links Home, Blog, Portfolio, Videos, Contact are visible and each navigates to the correct route.",
+  "targetUrl": "",
+  "runtimeMode": "headless",
+  "finishedAt": "2026-03-07T16:32:50.153Z"
+}

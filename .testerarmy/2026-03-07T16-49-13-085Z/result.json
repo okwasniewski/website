@@ -1,0 +1,25 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "The 'contact' navigation item in the header is a span element on the home page and does not route to /contact, unlike on other pages where it functions as a link.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify navigation links in mobile header', async ({ page }) => {\n  // Set viewport to mobile 375x812\n  await page.setViewportSize({ width: 375, height: 812 });\n\n  // Navigate to the home page\n  await page.goto('http://localhost:3002/');\n\n  // Verify links in header\n  const brandLink = page.getByRole('link', { name: 'okwasniewski' });\n  const blogLink = page.getByRole('link', { name: 'blog' });\n  const portfolioLink = page.getByRole('link', { name: 'portfolio' });\n  const videosLink = page.getByRole('link', { name: 'videos' });\n  const contactLink = page.getByRole('link', { name: 'contact' });\n\n  // Assert existence and hrefs\n  await expect(brandLink).toBeVisible();\n  await expect(brandLink).toHaveAttribute('href', '/');\n  await expect(blogLink).toBeVisible();\n  await expect(blogLink).toHaveAttribute('href', '/blog');\n  await expect(portfolioLink).toBeVisible();\n  await expect(portfolioLink).toHaveAttribute('href', '/portfolio');\n  await expect(videosLink).toBeVisible();\n  await expect(videosLink).toHaveAttribute('href', '/videos');\n\n  // Validate navigation for existing links\n  await blogLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/blog');\n  \n  await portfolioLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/portfolio');\n  \n  await videosLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/videos');\n  \n  await brandLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n\n  // Check for the failing 'contact' link on the home page\n  // It is expected to be a link and route to /contact\n  await expect(page.getByRole('link', { name: 'contact' })).toBeVisible();\n  await expect(page.getByRole('link', { name: 'contact' })).toHaveAttribute('href', '/contact');\n});",
+  "issues": [
+    {
+      "name": "Contact navigation item is not a link on the home page",
+      "description": "Expected: The \"contact\" item in the header should be a link that routes to /contact on all pages, including the home page. Actual: On the home page (/), the \"contact\" item in the navigation header is a <span> element instead of a link, making it unclickable and preventing navigation to /contact. On other pages (blog, portfolio, videos), it is correctly implemented as a link.",
+      "url": "http://localhost:3002/",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002 (the home page) with a 375x812 viewport.",
+        "Attempt to click the \"contact\" item in the header.",
+        "Observe that it is a span element and does not trigger any navigation."
+      ],
+      "expectedBehavior": "The \"contact\" item in the header should be a link that routes to /contact on all pages, including the home page.",
+      "actualBehavior": "On the home page (/), the \"contact\" item in the navigation header is a <span> element instead of a link, making it unclickable and preventing navigation to /contact. On other pages (blog, portfolio, videos), it is correctly implemented as a link.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-49-13-085Z/screenshot-001.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-49-13-085Z/screenshot-001.png"
+  ]
+}

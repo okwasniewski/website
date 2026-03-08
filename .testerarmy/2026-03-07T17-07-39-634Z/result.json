@@ -1,0 +1,28 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "All header navigation links (Home/okwasniewski, Blog, Portfolio, Videos, Contact) have correct routing in the DOM but are unclickable via pointer events (mouse/touch) on both mobile and desktop viewports due to 'pointer-events: none'. Navigation only works via keyboard or direct JS execution.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('header links should be clickable and route correctly', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  const links = [\n    { name: 'okwasniewski', path: '/' },\n    { name: 'blog', path: '/blog' },\n    { name: 'portfolio', path: '/portfolio' },\n    { name: 'videos', path: '/videos' },\n    { name: 'contact', path: '/contact' }\n  ];\n\n  for (const link of links) {\n    const locator = page.locator(`header a:has-text(\"${link.name}\")`);\n    await expect(locator).toBeVisible();\n    \n    // Verify pointer-events is not 'none'\n    const pointerEvents = await locator.evaluate(el => getComputedStyle(el).pointerEvents);\n    expect(pointerEvents).not.toBe('none');\n\n    // This will fail due to the bug (pointer-events: none)\n    await locator.click();\n    await page.waitForURL(`**${link.path}`);\n    expect(page.url()).toContain(link.path);\n    \n    // Go back to home if needed for next link\n    if (link.path !== '/') await page.goto('http://localhost:3002/');\n  }\n});",
+  "issues": [
+    {
+      "name": "Header navigation links are unclickable via pointer events (pointer-events: none)",
+      "description": "Expected: Header navigation links should be clickable using a mouse or touch device. Actual: All header navigation links (okwasniewski, blog, portfolio, videos, contact) have \"pointer-events: none\" in their computed style, making them unclickable via mouse or touch. They can only be interacted with via keyboard navigation.",
+      "url": "http://localhost:3002/",
+      "severity": 5,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/ using any viewport (e.g. 375x812)",
+        "Try to click on the \"blog\", \"portfolio\", \"videos\", or \"contact\" links in the header.",
+        "Observe that the cursor does not change and clicking has no effect.",
+        "Verify using browser developer tools that the 'a' elements have 'pointer-events: none'."
+      ],
+      "expectedBehavior": "Header navigation links should be clickable using a mouse or touch device.",
+      "actualBehavior": "All header navigation links (okwasniewski, blog, portfolio, videos, contact) have \"pointer-events: none\" in their computed style, making them unclickable via mouse or touch. They can only be interacted with via keyboard navigation.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-07-39-634Z/screenshot-003.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-07-39-634Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-07-39-634Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-07-39-634Z/screenshot-003.png"
+  ]
+}

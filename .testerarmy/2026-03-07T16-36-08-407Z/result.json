@@ -1,0 +1,40 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Validated header navigation on mobile; found inconsistent and incorrect targets for 'videos' (Home/Blog pages point to /vidoes) and 'contact' (404 page points to /contcat).",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('validate header navigation targets', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Check Home page header links\n  const homeVideos = await page.getByRole('link', { name: 'videos', exact: true });\n  await expect(homeVideos).toHaveAttribute('href', '/videos'); // This will fail as it is '/vidoes'\n\n  const homeContact = await page.getByRole('link', { name: 'contact', exact: true });\n  await expect(homeContact).toHaveAttribute('href', '/contact');\n\n  // Navigate to 404 page to check header there\n  await page.goto('http://localhost:3002/vidoes');\n  const errorPageContact = await page.getByRole('link', { name: 'contact', exact: true });\n  await expect(errorPageContact).toHaveAttribute('href', '/contact'); // This will fail as it is '/contcat'\n});",
+  "issues": [
+    {
+      "name": "Incorrect navigation target for 'videos' link on Home/Blog pages",
+      "description": "Expected: The \"videos\" link in the header should point to \"/videos\". Actual: The \"videos\" link in the header points to \"/vidoes\", which results in a 404 error.",
+      "url": "http://localhost:3002/",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/ or http://localhost:3002/blog",
+        "Hover over or click the 'videos' link in the header.",
+        "Observe the URL target is '/vidoes'."
+      ],
+      "expectedBehavior": "The \"videos\" link in the header should point to \"/videos\".",
+      "actualBehavior": "The \"videos\" link in the header points to \"/vidoes\", which results in a 404 error.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-36-08-407Z/screenshot-001.png"
+    },
+    {
+      "name": "Incorrect navigation target for 'contact' link on 404 page",
+      "description": "Expected: The 'contact' link in the header should point to '/contact'. Actual: The 'contact' link in the header points to '/contcat' instead of '/contact'.",
+      "url": "http://localhost:3002/vidoes",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to a non-existent page like http://localhost:3002/vidoes (or any 404 page).",
+        "Observe the 'contact' link in the header.",
+        "Verify the target is '/contcat'."
+      ],
+      "expectedBehavior": "The 'contact' link in the header should point to '/contact'.",
+      "actualBehavior": "The 'contact' link in the header points to '/contcat' instead of '/contact'.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-36-08-407Z/screenshot-002.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-36-08-407Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-36-08-407Z/screenshot-002.png"
+  ]
+}

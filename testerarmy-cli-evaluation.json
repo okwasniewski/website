@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "mutation": "baseline",
+    "result": "PASS",
+    "issues": 0,
+    "description": "Verified that all header navigation links (okwasniewski, blog, portfolio, videos, contact) are present in the mobile viewport and correctly route to their respective paths (/, /blog, /portfolio, /videos, /contact). Navigation was validated by clicking each link and confirming the resulting URL.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-51-30-916Z/result.json"
+  },
+  {
+    "id": 2,
+    "mutation": "home_label_changed",
+    "result": "FAILED",
+    "issues": 3,
+    "description": "Verified header links and routes on mobile viewport. Found that the brand link text is 'Oskar Site' instead of 'okwasniewski', the 'Home' link text is missing, and the navigation links are lowercase instead of capitalized. Routes are correct for all 5 links.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-52-26-896Z/result.json"
+  },
+  {
+    "id": 3,
+    "mutation": "blog_typo",
+    "result": "FAILED",
+    "issues": 2,
+    "description": "Tested header navigation in mobile viewport (375x812). All links (Home, Blog, Portfolio, Videos, Contact) were present, but the 'Blog' and 'Contact' links inconsistently route to incorrect paths ('/blgo' and '/contcat') resulting in 404 errors.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-54-45-870Z/result.json"
+  },
+  {
+    "id": 4,
+    "mutation": "portfolio_typo",
+    "result": "FAILED",
+    "issues": 2,
+    "description": "Verified header navigation in mobile viewport. Found incorrect routes for 'Portfolio' on the home page and 'Contact' on the 404 page, both leading to broken links.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-57-16-763Z/result.json"
+  },
+  {
+    "id": 5,
+    "mutation": "videos_typo",
+    "result": "FAILED",
+    "issues": 1,
+    "description": "Tested header navigation in mobile view (375x812) and found that the Contact link correctly exists but has a typo in its route ('/contcat'), leading to a 404 error.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-00-52-857Z/result.json"
+  },
+  {
+    "id": 6,
+    "mutation": "contact_typo",
+    "result": "FAILED",
+    "issues": 1,
+    "description": "Verified navigation links for Home, Blog, Portfolio, Videos, and Contact in the header at 375x812; the 'Contact' link incorrectly routes to '/contcat' instead of '/contact', resulting in a 404 error.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-02-33-156Z/result.json"
+  },
+  {
+    "id": 7,
+    "mutation": "blog_removed",
+    "result": "FAILED",
+    "issues": 1,
+    "description": "Verified header navigation in mobile viewport; all links (Home, Portfolio, Videos, Contact) correctly route to their respective pages, but the 'Blog' link is missing from the header specifically on the Home page.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-03-22-271Z/result.json"
+  },
+  {
+    "id": 8,
+    "mutation": "contact_not_clickable",
+    "result": "FAILED",
+    "issues": 1,
+    "description": "Verified header navigation links for okwasniewski (Home), Blog, Portfolio, Videos, and Contact; the 'contact' item is a non-clickable SPAN element on the homepage instead of a link.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-04-49-843Z/result.json"
+  },
+  {
+    "id": 9,
+    "mutation": "swapped_blog_portfolio",
+    "result": "FAILED",
+    "issues": 2,
+    "description": "Verified the mobile header navigation; found that the 'Blog' and 'Portfolio' links are swapped, leading to the wrong routes.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-06-50-682Z/result.json"
+  },
+  {
+    "id": 10,
+    "mutation": "nav_pointer_events_none",
+    "result": "FAILED",
+    "issues": 1,
+    "description": "All header navigation links (Home/okwasniewski, Blog, Portfolio, Videos, Contact) have correct routing in the DOM but are unclickable via pointer events (mouse/touch) on both mobile and desktop viewports due to 'pointer-events: none'. Navigation only works via keyboard or direct JS execution.",
+    "result_file": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-07-39-634Z/result.json"
+  }
+]

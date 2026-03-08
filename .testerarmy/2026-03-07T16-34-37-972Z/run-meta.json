@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runId": "2026-03-07T16-34-37-972Z",
+  "pid": 30571,
+  "startedAt": "2026-03-07T16:34:37.976Z",
+  "prompt": "On http://localhost:3002 (mobile 375x812), verify header links route correctly: blog->/blog, portfolio->/portfolio, videos->/videos, contact->/contact. Ignore PostHog warning.",
+  "targetUrl": "",
+  "runtimeMode": "headless",
+  "finishedAt": "2026-03-07T16:35:56.772Z"
+}

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runId": "2026-03-07T16-33-19-059Z",
+  "pid": 30366,
+  "startedAt": "2026-03-07T16:33:19.063Z",
+  "prompt": "On http://localhost:3002 (mobile 375x812), verify header links blog/portfolio/videos/contact exist and navigate to /blog /portfolio /videos /contact. Treat brand label 'okwasniewski' as valid home label. Ignore known PostHog console error if present.",
+  "targetUrl": "",
+  "runtimeMode": "headless",
+  "finishedAt": "2026-03-07T16:34:23.992Z"
+}

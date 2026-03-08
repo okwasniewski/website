@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "runId": "2026-03-07T17-00-52-857Z",
+  "pid": 35471,
+  "startedAt": "2026-03-07T17:00:52.861Z",
+  "prompt": "On http://localhost:3002 use mobile viewport 375x812. Verify header has Home (brand okwasniewski), Blog, Portfolio, Videos, Contact and each routes to / /blog /portfolio /videos /contact. Click each link and validate navigation. Report missing, unclickable, or wrong-route links. Ignore analytics/config console warnings.",
+  "targetUrl": "",
+  "runtimeMode": "headless",
+  "finishedAt": "2026-03-07T17:02:31.290Z"
+}

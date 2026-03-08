@@ -1,0 +1,28 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header navigation links for okwasniewski (Home), Blog, Portfolio, Videos, and Contact; the 'contact' item is a non-clickable SPAN element on the homepage instead of a link.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header navigation links', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Verify brand link (Home)\n  const brandLink = page.getByRole('link', { name: 'okwasniewski' });\n  await expect(brandLink).toHaveAttribute('href', '/');\n  await brandLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n\n  // Verify Blog link\n  const blogLink = page.getByRole('link', { name: 'blog' });\n  await expect(blogLink).toHaveAttribute('href', '/blog');\n  await blogLink.click();\n  await expect(page).toHaveURL(/.*\\/blog/);\n\n  // Verify Portfolio link\n  const portfolioLink = page.getByRole('link', { name: 'portfolio' });\n  await expect(portfolioLink).toHaveAttribute('href', '/portfolio');\n  await portfolioLink.click();\n  await expect(page).toHaveURL(/.*\\/portfolio/);\n\n  // Verify Videos link\n  const videosLink = page.getByRole('link', { name: 'videos' });\n  await expect(videosLink).toHaveAttribute('href', '/videos');\n  await videosLink.click();\n  await expect(page).toHaveURL(/.*\\/videos/);\n\n  // Verify Contact link (FAIL on homepage)\n  await page.goto('http://localhost:3002/');\n  const contactElement = page.getByText('contact');\n  const tagName = await contactElement.evaluate(el => el.tagName);\n  if (tagName !== 'A') {\n    console.error('Contact item is not a link on the homepage');\n  }\n});",
+  "issues": [
+    {
+      "name": "Contact navigation item is not a link on the homepage",
+      "description": "Expected: The \"contact\" item in the navigation header should be a link that routes to /contact on all pages, including the homepage. Actual: The \"contact\" item in the navigation header is a SPAN element and not a link on the homepage, making it unclickable and unable to route to /contact. On other pages (Blog, Portfolio, Videos), it is a functional link.",
+      "url": "http://localhost:3002/",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/ using a mobile viewport (375x812).",
+        "Locate the \"contact\" item in the header navigation.",
+        "Observe that it is a SPAN element and not a link.",
+        "Attempt to click it and verify that no navigation occurs."
+      ],
+      "expectedBehavior": "The \"contact\" item in the navigation header should be a link that routes to /contact on all pages, including the homepage.",
+      "actualBehavior": "The \"contact\" item in the navigation header is a SPAN element and not a link on the homepage, making it unclickable and unable to route to /contact. On other pages (Blog, Portfolio, Videos), it is a functional link.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-04-49-843Z/screenshot-003.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-04-49-843Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-04-49-843Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T17-04-49-843Z/screenshot-003.png"
+  ]
+}

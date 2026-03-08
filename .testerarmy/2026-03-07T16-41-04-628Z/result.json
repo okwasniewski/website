@@ -1,0 +1,55 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "I verified the header links on the home and 404 pages using a mobile viewport. The 'blog' link points to '/blgo' instead of '/blog' on the home page, the 'contact' link points to '/contcat' instead of '/contact' on the 404 page, and the 'Home' link text is missing entirely (only the site name 'okwasniewski' points to '/').",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header links and targets on mobile', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002');\n\n  // Verify header links on Home page\n  const homeLink = page.getByRole('link', { name: 'Home' });\n  const blogLink = page.getByRole('link', { name: 'blog', exact: true });\n  const portfolioLink = page.getByRole('link', { name: 'portfolio', exact: true });\n  const videosLink = page.getByRole('link', { name: 'videos', exact: true });\n  const contactLink = page.getByRole('link', { name: 'contact', exact: true });\n\n  // Check existence and href targets on Home page\n  await expect(homeLink).toBeVisible(); // Missing: only 'okwasniewski' points to '/'\n  await expect(blogLink).toHaveAttribute('href', '/blog'); // Fails: points to '/blgo'\n  await expect(portfolioLink).toHaveAttribute('href', '/portfolio');\n  await expect(videosLink).toHaveAttribute('href', '/videos');\n  await expect(contactLink).toHaveAttribute('href', '/contact');\n\n  // Navigate to 404 page (by following the broken blog link) to check header consistency\n  await page.goto('http://localhost:3002/blgo');\n  const contactLink404 = page.getByRole('link', { name: 'contact', exact: true });\n  await expect(contactLink404).toHaveAttribute('href', '/contact'); // Fails: points to '/contcat'\n});",
+  "issues": [
+    {
+      "name": "Incorrect Blog link target",
+      "description": "Expected: The \"blog\" link should point to \"/blog\". Actual: The \"blog\" link in the header points to \"/blgo\" instead of \"/blog\" on the home, portfolio, videos, and contact pages.",
+      "url": "http://localhost:3002/",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/",
+        "Locate the \"blog\" link in the header and check its href attribute.",
+        "Observe that it points to \"/blgo\"."
+      ],
+      "expectedBehavior": "The \"blog\" link should point to \"/blog\".",
+      "actualBehavior": "The \"blog\" link in the header points to \"/blgo\" instead of \"/blog\" on the home, portfolio, videos, and contact pages.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-41-04-628Z/screenshot-001.png"
+    },
+    {
+      "name": "Incorrect Contact link target on 404 page",
+      "description": "Expected: The \"contact\" link should point to \"/contact\". Actual: The \"contact\" link in the header points to \"/contcat\" instead of \"/contact\" on the 404 error page.",
+      "url": "http://localhost:3002/blgo",
+      "severity": 2,
+      "reproductionSteps": [
+        "Navigate to a non-existent page like http://localhost:3002/blgo to reach the 404 page.",
+        "Locate the \"contact\" link in the header and check its href attribute.",
+        "Observe that it points to \"/contcat\"."
+      ],
+      "expectedBehavior": "The \"contact\" link should point to \"/contact\".",
+      "actualBehavior": "The \"contact\" link in the header points to \"/contcat\" instead of \"/contact\" on the 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-41-04-628Z/screenshot-002.png"
+    },
+    {
+      "name": "Missing \"Home\" link text",
+      "description": "Expected: A link with the text \"Home\" pointing to \"/\" should be present in the header. Actual: The header contains the links \"okwasniewski\" (linking to /), \"blog\", \"portfolio\", \"videos\", and \"contact\". There is no link explicitly named \"Home\".",
+      "url": "http://localhost:3002/",
+      "severity": 2,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/",
+        "Look for a link explicitly named \"Home\" in the header.",
+        "Observe that only the site name \"okwasniewski\" links to \"/\"."
+      ],
+      "expectedBehavior": "A link with the text \"Home\" pointing to \"/\" should be present in the header.",
+      "actualBehavior": "The header contains the links \"okwasniewski\" (linking to /), \"blog\", \"portfolio\", \"videos\", and \"contact\". There is no link explicitly named \"Home\".",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-41-04-628Z/screenshot-003.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-41-04-628Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-41-04-628Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-41-04-628Z/screenshot-003.png"
+  ]
+}

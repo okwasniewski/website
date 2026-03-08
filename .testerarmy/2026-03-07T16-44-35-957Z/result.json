@@ -1,0 +1,26 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header links for Home, Blog, Portfolio, Videos, and Contact sections using a mobile viewport. While most links function correctly, the 'Videos' and 'Contact' links contain typos ('/vidoes' and '/contcat') that lead to 404 errors depending on the current page.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header links and targets on mobile', async ({ page }) => {\n  // Set mobile viewport\n  await page.setViewportSize({ width: 375, height: 812 });\n\n  // Navigate to the target URL\n  await page.goto('http://localhost:3002');\n\n  // Verify Home link (logo/brand) target\n  const homeLink = page.locator('nav').getByRole('link', { name: 'okwasniewski' });\n  await expect(homeLink).toHaveAttribute('href', '/');\n  await homeLink.click();\n  expect(page.url()).toBe('http://localhost:3002/');\n\n  // Verify Blog link target\n  const blogLink = page.locator('nav').getByRole('link', { name: 'blog' });\n  await expect(blogLink).toHaveAttribute('href', '/blog');\n  await blogLink.click();\n  expect(page.url()).toContain('/blog');\n  await page.goBack();\n\n  // Verify Portfolio link target\n  const portfolioLink = page.locator('nav').getByRole('link', { name: 'portfolio' });\n  await expect(portfolioLink).toHaveAttribute('href', '/portfolio');\n  await portfolioLink.click();\n  expect(page.url()).toContain('/portfolio');\n  await page.goBack();\n\n  // Verify Videos link target (Expected to fail due to typo /vidoes)\n  const videosLink = page.locator('nav').getByRole('link', { name: 'videos' });\n  const videosHref = await videosLink.getAttribute('href');\n  expect(videosHref).toBe('/videos'); // This fails as it is '/vidoes'\n\n  // Verify Contact link target (Expected to fail if on 404 page due to typo /contcat)\n  const contactLink = page.locator('nav').getByRole('link', { name: 'contact' });\n  const contactHref = await contactLink.getAttribute('href');\n  expect(contactHref).toBe('/contact');\n});",
+  "issues": [
+    {
+      "name": "Misspelled Header Link Targets",
+      "description": "Expected: Header links should consistently point to / /blog /portfolio /videos /contact. Actual: The 'Videos' and 'Contact' links in the header contain typos ('/vidoes' and '/contcat') depending on the page. On Home, 'Videos' is '/vidoes'. On the resulting 404 page, 'Videos' is fixed but 'Contact' is now '/contcat'. This prevents navigation to those sections.",
+      "url": "http://localhost:3002/vidoes",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002.",
+        "Observe the 'Videos' link points to '/vidoes'. Click it. Observe it leads to a 404 page.",
+        "On the 404 page, observe the 'Contact' link points to '/contcat'. Click it. Observe it leads to a 404 page."
+      ],
+      "expectedBehavior": "Header links should consistently point to / /blog /portfolio /videos /contact.",
+      "actualBehavior": "The 'Videos' and 'Contact' links in the header contain typos ('/vidoes' and '/contcat') depending on the page. On Home, 'Videos' is '/vidoes'. On the resulting 404 page, 'Videos' is fixed but 'Contact' is now '/contcat'. This prevents navigation to those sections.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-44-35-957Z/screenshot-002.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-44-35-957Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-44-35-957Z/screenshot-002.png"
+  ]
+}

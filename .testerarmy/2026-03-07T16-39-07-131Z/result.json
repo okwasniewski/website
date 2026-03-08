@@ -1,0 +1,39 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "The header links point to the correct routes (/ /blog /portfolio /videos /contact), but the 'Home' link is labeled 'Oskar Site' and other labels are lowercase instead of Title Case. Tested navigation on mobile viewport for each link and confirmed targets are correct, but labels are missing or inconsistent.",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header links and navigation on mobile', async ({ page }) => {\n  // Set mobile viewport 375x812\n  await page.setViewportSize({ width: 375, height: 812 });\n\n  // Navigate to the site\n  await page.goto('http://localhost:3002/');\n\n  // Define expected links and their targets\n  const expectedLinks = [\n    { name: /Oskar Site|Home/i, target: '/' },\n    { name: /blog/i, target: '/blog' },\n    { name: /portfolio/i, target: '/portfolio' },\n    { name: /videos/i, target: '/videos' },\n    { name: /contact/i, target: '/contact' }\n  ];\n\n  // Verify each link is present and has the correct target\n  for (const link of expectedLinks) {\n    const linkElement = page.getByRole('link', { name: link.name });\n    await expect(linkElement).toBeVisible();\n    const href = await linkElement.getAttribute('href');\n    expect(href).toBe(link.target);\n  }\n\n  // Test clicking each link and verify navigation (Home link is 'Oskar Site')\n  await page.getByRole('link', { name: 'blog' }).click();\n  await expect(page).toHaveURL(/.*\\/blog/);\n\n  await page.getByRole('link', { name: 'portfolio' }).click();\n  await expect(page).toHaveURL(/.*\\/portfolio/);\n\n  await page.getByRole('link', { name: 'videos' }).click();\n  await expect(page).toHaveURL(/.*\\/videos/);\n\n  await page.getByRole('link', { name: 'contact' }).click();\n  await expect(page).toHaveURL(/.*\\/contact/);\n\n  await page.getByRole('link', { name: 'Oskar Site' }).click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n});",
+  "issues": [
+    {
+      "name": "Missing Home link label and inconsistent link casing",
+      "description": "Expected: The header should contain links labeled 'Home', 'Blog', 'Portfolio', 'Videos', and 'Contact' linking to '/', '/blog', '/portfolio', '/videos', and '/contact' respectively. Actual: The header contains links labeled 'Oskar Site', 'blog', 'portfolio', 'videos', and 'contact' (all lowercase except 'Oskar Site'). The label 'Home' is completely missing and replaced by 'Oskar Site'. Additionally, all other links are lowercase while the requirement implies Title Case ('Blog', 'Portfolio', etc.).",
+      "url": "http://localhost:3002/",
+      "severity": 2,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002 using a mobile viewport (375x812).",
+        "Observe the header links.",
+        "Verify if 'Home' link exists with the correct label."
+      ],
+      "expectedBehavior": "The header should contain links labeled 'Home', 'Blog', 'Portfolio', 'Videos', and 'Contact' linking to '/', '/blog', '/portfolio', '/videos', and '/contact' respectively.",
+      "actualBehavior": "The header contains links labeled 'Oskar Site', 'blog', 'portfolio', 'videos', and 'contact' (all lowercase except 'Oskar Site'). The label 'Home' is completely missing and replaced by 'Oskar Site'. Additionally, all other links are lowercase while the requirement implies Title Case ('Blog', 'Portfolio', etc.)."
+    },
+    {
+      "name": "Header links labels use lowercase casing",
+      "description": "Expected: Header links should use Title Case labels: 'Home', 'Blog', 'Portfolio', 'Videos', and 'Contact'. Actual: The header navigation links 'blog', 'portfolio', 'videos', and 'contact' are all lowercase. The requirement implies 'Blog', 'Portfolio', 'Videos', and 'Contact'. Additionally, the 'Home' link is labeled as 'Oskar Site'.",
+      "url": "http://localhost:3002/",
+      "severity": 1,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/ in a mobile viewport.",
+        "Observe the navigation link labels in the header."
+      ],
+      "expectedBehavior": "Header links should use Title Case labels: 'Home', 'Blog', 'Portfolio', 'Videos', and 'Contact'.",
+      "actualBehavior": "The header navigation links 'blog', 'portfolio', 'videos', and 'contact' are all lowercase. The requirement implies 'Blog', 'Portfolio', 'Videos', and 'Contact'. Additionally, the 'Home' link is labeled as 'Oskar Site'.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-39-07-131Z/screenshot-003.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-39-07-131Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-39-07-131Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-39-07-131Z/screenshot-003.png"
+  ]
+}

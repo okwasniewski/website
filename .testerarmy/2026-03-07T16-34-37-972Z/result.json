@@ -1,0 +1,40 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "The 'portfolio' header link on the homepage and blog page contains a typo ('/portfoloi') that leads to a 404 page, and the 'contact' link on the resulting 404 page also contains a typo ('/contcat').",
+  "playwrightCode": "import { test, expect } from '@playwright/test';\n\ntest('verify header links route correctly', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Verify Blog link\n  await page.click('header a:has-text(\"blog\")');\n  await expect(page).toHaveURL(/.*\\/blog/);\n  await page.goto('http://localhost:3002/');\n\n  // Verify Portfolio link (TYPO: /portfoloi)\n  const portfolioLink = await page.getAttribute('header a:has-text(\"portfolio\")', 'href');\n  expect(portfolioLink).toBe('/portfolio');\n  await page.click('header a:has-text(\"portfolio\")');\n  await expect(page).toHaveURL(/.*\\/portfolio/);\n\n  // Verify Videos link\n  await page.goto('http://localhost:3002/');\n  await page.click('header a:has-text(\"videos\")');\n  await expect(page).toHaveURL(/.*\\/videos/);\n\n  // Verify Contact link\n  await page.goto('http://localhost:3002/');\n  await page.click('header a:has-text(\"contact\")');\n  await expect(page).toHaveURL(/.*\\/contact/);\n});",
+  "issues": [
+    {
+      "name": "Typo in Portfolio link on Homepage and Blog page",
+      "description": "Expected: The \"portfolio\" link should point to \"/portfolio\" and route correctly to the portfolio page. Actual: The \"portfolio\" link in the header on the homepage and blog page points to \"/portfoloi\" instead of \"/portfolio\", leading to a 404 page.",
+      "url": "http://localhost:3002/",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Observe the 'portfolio' link in the header points to '/portfoloi'",
+        "Click the 'portfolio' link and observe it leads to a 404 page"
+      ],
+      "expectedBehavior": "The \"portfolio\" link should point to \"/portfolio\" and route correctly to the portfolio page.",
+      "actualBehavior": "The \"portfolio\" link in the header on the homepage and blog page points to \"/portfoloi\" instead of \"/portfolio\", leading to a 404 page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-34-37-972Z/screenshot-001.png"
+    },
+    {
+      "name": "Typo in Contact link on 404 page",
+      "description": "Expected: The \"contact\" link should point to \"/contact\" and route correctly to the contact page. Actual: On the 404 page (reached via a broken link), the \"contact\" link in the header points to \"/contcat\" instead of \"/contact\", leading to another 404.",
+      "url": "http://localhost:3002/portfoloi",
+      "severity": 3,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/portfoloi (broken link)",
+        "Observe the 'contact' link in the header points to '/contcat'",
+        "Click the 'contact' link and observe it leads to another 404 page"
+      ],
+      "expectedBehavior": "The \"contact\" link should point to \"/contact\" and route correctly to the contact page.",
+      "actualBehavior": "On the 404 page (reached via a broken link), the \"contact\" link in the header points to \"/contcat\" instead of \"/contact\", leading to another 404.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-34-37-972Z/screenshot-002.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-34-37-972Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-34-37-972Z/screenshot-002.png"
+  ]
+}

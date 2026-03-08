@@ -1,0 +1,41 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header links on mobile viewport; navigation to '/contact' failed due to a typo in the href ('/contcat'), and no link labeled 'Home' was found (the logo 'okwasniewski' links to '/').",
+  "playwrightCode": "const { test, expect } = require('@playwright/test');\n\ntest('Verify header links', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  const links = await page.$$eval('header a, nav a', (els) => els.map(el => ({ text: el.innerText.trim(), href: el.getAttribute('href') })));\n\n  // Verify Home link\n  const home = links.find(l => l.text.toLowerCase() === 'home');\n  expect(home, 'Home link should be present').toBeDefined();\n\n  // Verify Contact link\n  const contact = links.find(l => l.text.toLowerCase() === 'contact');\n  expect(contact?.href).toBe('/contact');\n\n  // Verify other links\n  expect(links.find(l => l.text.toLowerCase() === 'blog')?.href).toBe('/blog');\n  expect(links.find(l => l.text.toLowerCase() === 'portfolio')?.href).toBe('/portfolio');\n  expect(links.find(l => l.text.toLowerCase() === 'videos')?.href).toBe('/videos');\n});",
+  "issues": [
+    {
+      "name": "Contact link points to wrong route /contcat",
+      "description": "Expected: The \"contact\" link should point to \"/contact\". Actual: The link labeled \"contact\" in the header points to \"/contcat\", which results in a 404 error page.",
+      "url": "http://localhost:3002/",
+      "severity": 4,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/",
+        "Locate the \"contact\" link in the header",
+        "Observe that the href is \"/contcat\"",
+        "Click the link and observe a 404 page"
+      ],
+      "expectedBehavior": "The \"contact\" link should point to \"/contact\".",
+      "actualBehavior": "The link labeled \"contact\" in the header points to \"/contcat\", which results in a 404 error page.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-46-01-441Z/screenshot-001.png"
+    },
+    {
+      "name": "Home link label is missing in header",
+      "description": "Expected: A link labeled \"Home\" pointing to \"/\" should be present in the header as per the requirements. Actual: The header link pointing to \"/\" is labeled \"okwasniewski\", but no link with the text \"Home\" is present in the header.",
+      "url": "http://localhost:3002/",
+      "severity": 1,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002/",
+        "Examine header links for the text \"Home\"",
+        "Observe that the logo \"okwasniewski\" links to \"/\", but no link is labeled \"Home\""
+      ],
+      "expectedBehavior": "A link labeled \"Home\" pointing to \"/\" should be present in the header as per the requirements.",
+      "actualBehavior": "The header link pointing to \"/\" is labeled \"okwasniewski\", but no link with the text \"Home\" is present in the header.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-46-01-441Z/screenshot-002.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-46-01-441Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-46-01-441Z/screenshot-002.png"
+  ]
+}

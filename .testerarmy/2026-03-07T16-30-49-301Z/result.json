@@ -1,0 +1,41 @@
+{
+  "featureName": "unknown",
+  "result": "FAILED",
+  "description": "Verified header links Blog, Portfolio, Videos, and Contact correctly navigate to their respective routes; however, the Home link is labeled 'okwasniewski' and a PostHog configuration error causes a console exception on load.",
+  "playwrightCode": "const { test, expect } = require('@playwright/test');\n\ntest('baseline header navigation check', async ({ page }) => {\n  await page.setViewportSize({ width: 375, height: 812 });\n  await page.goto('http://localhost:3002/');\n\n  // Verify header links are present (noting 'okwasniewski' is used for Home)\n  const homeLink = page.locator('header a').filter({ hasText: 'okwasniewski' });\n  const blogLink = page.getByRole('link', { name: 'blog', exact: true });\n  const portfolioLink = page.getByRole('link', { name: 'portfolio', exact: true });\n  const videosLink = page.getByRole('link', { name: 'videos', exact: true });\n  const contactLink = page.getByRole('link', { name: 'contact', exact: true });\n\n  await expect(homeLink).toBeVisible();\n  await expect(blogLink).toBeVisible();\n  await expect(portfolioLink).toBeVisible();\n  await expect(videosLink).toBeVisible();\n  await expect(contactLink).toBeVisible();\n\n  // Test navigation\n  await blogLink.click();\n  await expect(page).toHaveURL(/.*\\/blog/);\n\n  await portfolioLink.click();\n  await expect(page).toHaveURL(/.*\\/portfolio/);\n\n  await videosLink.click();\n  await expect(page).toHaveURL(/.*\\/videos/);\n\n  await contactLink.click();\n  await expect(page).toHaveURL(/.*\\/contact/);\n\n  await homeLink.click();\n  await expect(page).toHaveURL('http://localhost:3002/');\n});",
+  "issues": [
+    {
+      "name": "Header link labeled 'okwasniewski' instead of 'Home'",
+      "description": "Expected: The header link to the root page should be labeled 'Home' as specified in the verification list. Actual: The header link to the root page (/) is labeled 'okwasniewski' instead of 'Home'. All other links (blog, portfolio, videos, contact) are present and functional.",
+      "url": "http://localhost:3002/",
+      "severity": 1,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Observe the header links.",
+        "Verify the link to the root page (/) is labeled 'okwasniewski' instead of 'Home'."
+      ],
+      "expectedBehavior": "The header link to the root page should be labeled 'Home' as specified in the verification list.",
+      "actualBehavior": "The header link to the root page (/) is labeled 'okwasniewski' instead of 'Home'. All other links (blog, portfolio, videos, contact) are present and functional.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-30-49-301Z/screenshot-002.png"
+    },
+    {
+      "name": "PostHog initialization error (misconfiguration)",
+      "description": "Expected: The application should load without console errors, and PostHog should be initialized with a valid token or not at all if not configured. Actual: The console shows 'TypeError: a is undefined' at 685-6184cc1b7f03bc7e.js:1:3503, and the logs indicate 'PostHog was initialized without a token'. This occurs on page load.",
+      "url": "http://localhost:3002/",
+      "severity": 2,
+      "reproductionSteps": [
+        "Navigate to http://localhost:3002",
+        "Open the browser console.",
+        "Observe the 'TypeError: a is undefined' error and PostHog initialization error message."
+      ],
+      "expectedBehavior": "The application should load without console errors, and PostHog should be initialized with a valid token or not at all if not configured.",
+      "actualBehavior": "The console shows 'TypeError: a is undefined' at 685-6184cc1b7f03bc7e.js:1:3503, and the logs indicate 'PostHog was initialized without a token'. This occurs on page load.",
+      "screenshotUrl": "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-30-49-301Z/screenshot-003.png"
+    }
+  ],
+  "screenshots": [
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-30-49-301Z/screenshot-001.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-30-49-301Z/screenshot-002.png",
+    "/Users/openclaw/.openclaw/workspace/website/.testerarmy/2026-03-07T16-30-49-301Z/screenshot-003.png"
+  ]
+}
