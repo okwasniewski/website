@@ -45,7 +45,7 @@ body {
 }
 
 .tip {
-  background-color: rgba(47, 129, 247, 0.15);
+  background-color: rgba(249, 115, 22, 0.15);
 }
 .warn {
   background-color: rgba(214, 119, 64, 0.15);
@@ -80,13 +80,13 @@ code {
 
 @media (prefers-color-scheme: dark) {
   code {
-    color: #82aaff;
+    color: #fb923c;
   }
 }
 
 @media (prefers-color-scheme: light) {
   code {
-    color: #001080;
+    color: #c2410c;
   }
 }
 
@@ -127,8 +127,8 @@ pre [data-line] {
 }
 
 [data-highlighted-line] {
-  background: rgba(200, 200, 255, 0.1);
-  @apply border-l-blue-400;
+  background: rgba(251, 146, 60, 0.1);
+  @apply border-l-orange-400;
 }
 
 [data-highlighted-chars] {
