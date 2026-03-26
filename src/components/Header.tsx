@@ -7,7 +7,7 @@ const Header = () => (
         href="/"
         className="text-gray-900 dark:text-gray-100 hover:opacity-70 transition-opacity font-bold"
       >
-        okwasniewski
+        oskarkwasniewski
       </Link>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-gray-600 dark:text-gray-400 text-sm sm:justify-end sm:gap-6">
         <Link
