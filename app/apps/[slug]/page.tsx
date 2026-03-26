@@ -35,7 +35,7 @@ export default async function AppsPage({ params }: Props) {
 
   return (
     <>
-      <h1 className="mb-4 text-3xl font-semibold dark:text-gray-200">
+      <h1 className="mb-4 text-3xl font-semibold dark:text-purple-200">
         {meta.title}
       </h1>
       <div className="mx-auto prose dark:prose-invert lg:prose-lg font-sans">
