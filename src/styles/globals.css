@@ -6,8 +6,8 @@
 @source "../../content/**/*.mdx";
 
 @theme {
-  --color-dark-surface: #1e1d1d;
-  --color-dark-surface-accent: #2d2c2c;
+  --color-dark-surface: #1c1a24;
+  --color-dark-surface-accent: #2b2838;
   --font-sans: var(--font-geist);
 }
 
@@ -17,7 +17,7 @@ body {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #111010;
+    background-color: #110f18;
   }
 
   :root {
@@ -45,7 +45,7 @@ body {
 }
 
 .tip {
-  background-color: rgba(47, 129, 247, 0.15);
+  background-color: rgba(147, 51, 234, 0.15);
 }
 .warn {
   background-color: rgba(214, 119, 64, 0.15);
@@ -80,13 +80,13 @@ code {
 
 @media (prefers-color-scheme: dark) {
   code {
-    color: #82aaff;
+    color: #b39ddb;
   }
 }
 
 @media (prefers-color-scheme: light) {
   code {
-    color: #001080;
+    color: #6a1b9a;
   }
 }
 
@@ -115,7 +115,7 @@ code[data-line-numbers] {
 code[data-line-numbers] > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-  @apply inline-block w-4 mr-4 text-right text-gray-500;
+  @apply inline-block w-4 mr-4 text-right text-purple-500;
 }
 
 .prose {
@@ -127,8 +127,8 @@ pre [data-line] {
 }
 
 [data-highlighted-line] {
-  background: rgba(200, 200, 255, 0.1);
-  @apply border-l-blue-400;
+  background: rgba(180, 160, 255, 0.1);
+  @apply border-l-purple-400;
 }
 
 [data-highlighted-chars] {
@@ -169,7 +169,7 @@ figcaption + pre {
 }
 
 .prose pre {
-  background: rgba(205, 200, 255, 0.05);
+  background: rgba(180, 160, 255, 0.05);
 }
 
 .prose code::before,

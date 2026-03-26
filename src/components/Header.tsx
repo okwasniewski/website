@@ -5,32 +5,32 @@ const Header = () => (
     <nav className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <Link
         href="/"
-        className="text-gray-900 dark:text-gray-100 hover:opacity-70 transition-opacity font-bold"
+        className="text-purple-900 dark:text-purple-100 hover:opacity-70 transition-opacity font-bold"
       >
         okwasniewski
       </Link>
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-gray-600 dark:text-gray-400 text-sm sm:justify-end sm:gap-6">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-purple-600 dark:text-purple-400 text-sm sm:justify-end sm:gap-6">
         <Link
           href="/blog"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="hover:text-purple-900 dark:hover:text-purple-100 transition-colors"
         >
           blog
         </Link>
         <Link
           href="/portfolio"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="hover:text-purple-900 dark:hover:text-purple-100 transition-colors"
         >
           portfolio
         </Link>
         <Link
           href="/videos"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="hover:text-purple-900 dark:hover:text-purple-100 transition-colors"
         >
           videos
         </Link>
         <Link
           href="/contact"
-          className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+          className="hover:text-purple-900 dark:hover:text-purple-100 transition-colors"
         >
           contact
         </Link>
