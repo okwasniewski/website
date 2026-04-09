@@ -16,7 +16,7 @@ const Hero = () => (
           Oskar Kwaśniewski
         </h1>
         <p className="text-gray-600 dark:text-gray-400 font-mono">
-          Senior Software Engineer
+          Founder / CTO
         </p>
       </div>
     </div>
