@@ -16,31 +16,22 @@ const Hero = () => (
           Oskar Kwaśniewski
         </h1>
         <p className="text-gray-600 dark:text-gray-400 font-mono">
-          Senior Software Engineer
+          Founder / CTO
         </p>
       </div>
     </div>
     <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-4">
       <p>
-        Building React Native apps at{" "}
+        Building {" "}
         <a
-          href="https://www.born.com/"
+          href="https://tester.army/"
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100"
         >
-          Born
+          TesterArmy
         </a>
-        . Previously at{" "}
-        <a
-          href="https://callstack.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100"
-        >
-          Callstack
-        </a>{" "}
-        Open source enthusiast with 100+ merged PRs to React Native Core.
+        . Open source enthusiast with 100+ merged PRs to React Native Core.
       </p>
       <p>
         Creator of{" "}
