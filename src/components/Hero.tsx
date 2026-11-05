@@ -24,12 +24,12 @@ const Hero = () => (
       <p>
         Building {" "}
         <a
-          href="https://tester.army/"
+          href="https://e2e.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="underline underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100"
         >
-          TesterArmy
+          e2e
         </a>
         . Open source enthusiast with 100+ merged PRs to React Native Core.
       </p>
