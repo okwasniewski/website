@@ -6,7 +6,8 @@
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test": "tsx --test src/lib/*.test.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
