@@ -7,6 +7,8 @@ export interface PostMeta {
   featuredImage?: string;
   date?: string;
   github?: string;
+  /** Higher values sort ahead of date order. */
+  priority?: number;
   primaryAction?: {
     text: string;
     href: string;
@@ -60,11 +62,19 @@ export async function getPosts(options: Options): Promise<Post[]> {
       const meta = extractMeta(content);
       return { slug: slug.replace(".mdx", ""), meta };
     })
-    .sort(
-      (a, b) =>
+    .sort((a, b) => {
+      const priorityDelta = (b.meta.priority ?? 0) - (a.meta.priority ?? 0);
+      if (priorityDelta !== 0) return priorityDelta;
+
+      const dateDelta =
         new Date(b.meta.date ?? 0).getTime() -
-        new Date(a.meta.date ?? 0).getTime(),
-    );
+        new Date(a.meta.date ?? 0).getTime();
+      if (dateDelta !== 0) return dateDelta;
+
+      // Undated portfolio entries have no date, so this keeps the
+      // alphabetical order already shown on the site.
+      return a.slug.localeCompare(b.slug);
+    });
 
   return options.limit === -1 ? posts : posts.slice(0, options.limit);
 }
