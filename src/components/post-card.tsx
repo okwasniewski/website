@@ -33,11 +33,11 @@ function GitHubStarCount({ count }: { count: number }) {
 
   return (
     <span
-      className="inline-flex shrink-0 items-center justify-end gap-1 whitespace-nowrap text-sm tabular-nums text-gray-500 dark:text-gray-400"
+      className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap text-sm tabular-nums text-gray-500 dark:text-gray-400"
       title={`${formatted} GitHub stars`}
     >
       <FaRegStar className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-      <span className="min-w-[6ch] text-right">
+      <span>
         {formatted}
         <span className="sr-only"> GitHub stars</span>
       </span>
@@ -75,23 +75,23 @@ export function PostCard({
         </Link>
         {(githubHref || meta.date || hasStarCount) && (
           <div className="ml-auto flex shrink-0 items-center justify-end gap-3">
-            {githubHref && (
-              <Link
-                href={githubHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open ${meta.title ?? "project"} on GitHub`}
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-              >
-                <FaGithub className="w-4 h-4" />
-              </Link>
-            )}
             {meta.date && (
               <span className="text-sm text-gray-400 dark:text-gray-500 shrink-0">
                 {meta.date}
               </span>
             )}
             {hasStarCount ? <GitHubStarCount count={starCount} /> : null}
+            {githubHref && (
+              <Link
+                href={githubHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${meta.title ?? "project"} on GitHub`}
+                className="shrink-0 text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              >
+                <FaGithub className="w-4 h-4" />
+              </Link>
+            )}
           </div>
         )}
       </div>
